@@ -17,6 +17,7 @@ import net.minecraft.util.Identifier;
 public class NameBasedElytraArmorRenderer implements ArmorRenderer {
     // In 1.21.8 ElytraEntityModel is non-generic
     private ElytraEntityModel elytraModel; // lazy init to avoid NPE during early client init
+    private static final boolean DEBUG = Boolean.getBoolean("elytraName.debug");
 
     @Override
     public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, ItemStack stack, BipedEntityRenderState state, EquipmentSlot slot, int light, BipedEntityModel<BipedEntityRenderState> contextModel) {
@@ -24,6 +25,9 @@ public class NameBasedElytraArmorRenderer implements ArmorRenderer {
 
         String name = stack.getName().getString();
         String skin = NameSkinResolver.resolve(name);
+        if (DEBUG) {
+            System.out.println("[ElytraName] Item name='" + name + "' -> skin='" + skin + "'");
+        }
 
         Identifier texture = (skin != null && !skin.isEmpty())
             ? Identifier.of("minecraft", "textures/optifine/cit/elytra/model/" + skin + ".png")
