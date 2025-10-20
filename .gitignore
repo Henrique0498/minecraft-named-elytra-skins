@@ -19,6 +19,7 @@ tmp/
 generated/
 run/
 loom-cache/
+.jdk/
 
 # Logs
 *.log

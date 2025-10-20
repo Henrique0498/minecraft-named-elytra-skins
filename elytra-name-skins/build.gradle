@@ -44,3 +44,19 @@ sourceSets {
 		}
 	}
 }
+
+// Copy remapped (distributable) jar to repository root 'dist' with name '<project>-<version>.jar'
+tasks.register('copyToRootDist') {
+	// In Fabric Loom, 'remapJar' produces the distributable mod jar
+	dependsOn tasks.named('remapJar')
+	doLast {
+		def remap = tasks.named('remapJar').get().archiveFile.get().asFile
+		// Repository root is the parent folder of this module
+		def repoRoot = project.rootProject.projectDir.toPath().resolve('..').toFile().getCanonicalFile()
+		def rootDist = new File(repoRoot, 'dist')
+		if (!rootDist.exists()) rootDist.mkdirs()
+		def target = new File(rootDist, "${project.name}-${project.version}.jar")
+		ant.copy(file: remap, tofile: target)
+		println "Copied ${remap.name} -> ${target}"
+	}
+}
