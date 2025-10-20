@@ -1,6 +1,6 @@
-package com.example.elytra.support;
+package client.java.com.example.elytra.support;
 
-import com.example.elytra.support.NameSkinResolver;
+import client.java.com.example.elytra.support.NameSkinResolver;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.feature.ElytraFeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;

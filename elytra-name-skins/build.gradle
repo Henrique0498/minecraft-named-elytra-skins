@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'com.example'
-version = '1.0.1'
+version = '1.0.2'
 
 repositories {
 	mavenCentral()
@@ -38,9 +38,11 @@ sourceSets {
 	}
 	client {
 		java {
-			// Remover abordagem antiga de mixin/feature
-			exclude 'com/example/elytra/mixin/**'
+			// Usamos somente o mixin ElytraFeatureRendererMixin para trocar a textura.
+			// Mantemos a classe NameBasedElytraFeature excluída para evitar
+			// substituição completa do feature (poderia causar duplicação).
 			exclude 'com/example/elytra/support/NameBasedElytraFeature.java'
+			exclude 'com/example/elytra/mixin/PlayerRendererMixin.java'
 		}
 	}
 }
