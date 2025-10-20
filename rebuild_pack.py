@@ -109,11 +109,12 @@ def make_properties_pair(out_props_dir: Path, skin_name: str, display_name: str)
     write_properties(out_props_dir / f"{skin_name}_model.properties", model_props)
 
 def mirror_to_citresewn(out_root: Path):
-    """Espelha o conteúdo de assets/minecraft/optifine/cit para assets/citresewn/cit.
-    Mantém os mesmos .properties (referenciando caminho optifine), o que funciona pois
-    as texturas também serão copiadas para optifine/."""
+    """Espelha o conteúdo de assets/minecraft/optifine/cit para assets/minecraft/citresewn/cit.
+    CIT Resewn procura .properties em assets/minecraft/citresewn/cit (além de optifine/mcpatcher).
+    Mantemos as propriedades apontando para texture=optifine/... para reutilizar as mesmas imagens.
+    """
     mc_root = out_root / "assets" / "minecraft" / "optifine" / "cit"
-    cit_root = out_root / "assets" / "citresewn" / "cit"
+    cit_root = out_root / "assets" / "minecraft" / "citresewn" / "cit"
     if not mc_root.exists():
         return
     for src_dir, _, files in os.walk(mc_root):
@@ -195,10 +196,16 @@ def handle_reorganize_pack(src: Path, out: Path, make_citresewn: bool, pack_form
         print("Diretório de saída já existe:", out)
     ensure_dir(out)
 
-    # Copiar pack.mcmeta se houver
+    # Copiar pack.mcmeta se houver (evita copiar sobre o mesmo arquivo)
     pm = src / "pack.mcmeta"
     if pm.exists():
-        shutil.copy2(pm, out / "pack.mcmeta")
+        dest_pm = out / "pack.mcmeta"
+        try:
+            if pm.resolve() != dest_pm.resolve():
+                shutil.copy2(pm, dest_pm)
+        except FileNotFoundError:
+            # Se o caminho de destino não existe ainda, apenas tente copiar
+            shutil.copy2(pm, dest_pm)
 
     # Antes de mais nada, tente copiar as pastas de texturas e props existentes
     # origem típica: assets/minecraft/optifine/cit/elytra/{icon,model,properties}
@@ -209,7 +216,8 @@ def handle_reorganize_pack(src: Path, out: Path, make_citresewn: bool, pack_form
     for d in [out_icon, out_model, out_props]:
         ensure_dir(d)
 
-    if base_in.exists():
+    in_place = src.resolve() == out.resolve()
+    if base_in.exists() and not in_place:
         for sub in ["icon", "model", "properties"]:
             sdir = base_in / sub
             if sdir.exists():
@@ -218,7 +226,12 @@ def handle_reorganize_pack(src: Path, out: Path, make_citresewn: bool, pack_form
                     target_dir = (out_icon if sub == "icon" else out_model if sub == "model" else out_props) / rel
                     ensure_dir(target_dir)
                     for fn in files:
-                        shutil.copy2(Path(root) / fn, target_dir / fn)
+                        src_file = Path(root) / fn
+                        dst_file = target_dir / fn
+                        # Evita copiar o mesmo arquivo em reorganização in-place ou quando são idênticos
+                        if src_file.resolve() == dst_file.resolve():
+                            continue
+                        shutil.copy2(src_file, dst_file)
 
     # Corrigir/certificar que cada skin tem seus dois .properties e caminhos
     # Vamos varrer os .properties na saída e ajustar
