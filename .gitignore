@@ -24,7 +24,6 @@ loom-cache/
 *.log
 
 # Ignore packaged archives produced locally
-*.zip
 *.tar
 *.tar.gz
 
