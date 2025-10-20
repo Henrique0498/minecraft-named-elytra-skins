@@ -10,10 +10,10 @@ __pycache__/
 
 # Gradle and Java build outputs (any level)
 .gradle/
-build/
+elytra-name-skins/build/
+elytra-name-skins/dist/
 out/
 bin/
-dist/
 libs/
 tmp/
 generated/
