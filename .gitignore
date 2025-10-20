@@ -1,0 +1,35 @@
+# General OS/editor junk
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Gradle and Java build outputs (any level)
+.gradle/
+build/
+out/
+bin/
+dist/
+libs/
+tmp/
+generated/
+run/
+loom-cache/
+
+# Logs
+*.log
+
+# Ignore packaged archives produced locally
+*.zip
+*.tar
+*.tar.gz
+
+# Keep Gradle wrapper scripts and JAR
+!gradlew
+!gradlew.bat
+!gradle/wrapper/
+!gradle/wrapper/gradle-wrapper.jar

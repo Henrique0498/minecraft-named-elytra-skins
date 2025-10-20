@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "elytra_name_skins",
+  "version": "1.0.1",
+  "name": "Elytra Name Skins",
+  "description": "Aplica texturas de Elytra baseadas no display name do item.",
+  "authors": ["auto"],
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["com.example.elytra.ElytraNameSkinsClient"]
+  },
+  "mixins": ["elytra-name-skins.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.17.2",
+    "minecraft": ">=1.21.5 <=1.21.99",
+    "fabric-api": ">=0.130.0"
+  }
+}
