@@ -27,7 +27,11 @@ public abstract class ElytraFeatureRendererMixin {
             String name = stack.getName().getString();
             String skin = NameSkinResolver.resolve(name);
             if (skin != null && !skin.isEmpty()) {
-                cir.setReturnValue(Identifier.of("minecraft", "textures/optifine/cit/elytra/model/" + skin + ".png"));
+                Identifier id = Identifier.of("minecraft", "textures/optifine/cit/elytra/model/" + skin + ".png");
+                System.out.println("[ElytraNameSkins] Elytra detected; name='" + name + "' -> skin='" + skin + "' path=" + id);
+                cir.setReturnValue(id);
+            } else {
+                System.out.println("[ElytraNameSkins] Elytra detected; name='" + name + "' -> no matching skin, using vanilla");
             }
         }
     }

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "elytra_name_skins",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "name": "Elytra Name Skins",
   "description": "Aplica texturas de Elytra baseadas no display name do item.",
   "authors": ["auto"],
