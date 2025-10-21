@@ -1,4 +1,4 @@
-package client.java.com.example.elytra;
+package com.example.elytra;
 
 import com.example.elytra.support.NameSkinResolver;
 import net.fabricmc.api.ClientModInitializer;
