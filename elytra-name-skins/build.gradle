@@ -38,11 +38,10 @@ sourceSets {
 	}
 	client {
 		java {
-			// Usamos somente o mixin ElytraFeatureRendererMixin para trocar a textura.
-			// Mantemos a classe NameBasedElytraFeature excluída para evitar
-			// substituição completa do feature (poderia causar duplicação).
-			exclude 'com/example/elytra/support/NameBasedElytraFeature.java'
+			// Exclude legacy feature-replacement classes (we only use ElytraFeatureRendererMixin now)
 			exclude 'com/example/elytra/mixin/PlayerRendererMixin.java'
+			exclude 'com/example/elytra/support/NameBasedElytraFeature.java'
+			exclude 'com/example/elytra/support/NameBasedElytraArmorRenderer.java'
 		}
 	}
 }

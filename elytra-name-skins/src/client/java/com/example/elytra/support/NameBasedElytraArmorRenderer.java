@@ -39,6 +39,9 @@ public class NameBasedElytraArmorRenderer implements ArmorRenderer {
         }
 
         matrices.push();
+        // Sincroniza o estado do modelo base (posturas/poses) e aplica animações
+        contextModel.copyStateTo(this.elytraModel);
+        this.elytraModel.setAngles(state);
         VertexConsumer vc = vertexConsumers.getBuffer(RenderLayer.getArmorCutoutNoCull(texture));
         this.elytraModel.render(matrices, vc, light, OverlayTexture.DEFAULT_UV);
         matrices.pop();
