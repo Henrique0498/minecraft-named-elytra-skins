@@ -1,4 +1,4 @@
-package client.java.com.example.elytra.mixin;
+package com.example.elytra.mixin;
 
 import com.example.elytra.support.NameSkinResolver;
 import net.minecraft.client.render.entity.feature.ElytraFeatureRenderer;
